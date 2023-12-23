@@ -1,4 +1,4 @@
-import Secteur from 'src/security/secteur';
+import Secteur from '../../security/secteur';
 
 const userSecteur = {
   secteur: Object.keys(Secteur.values),

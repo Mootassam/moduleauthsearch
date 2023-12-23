@@ -1,5 +1,6 @@
 import schemas from '@modules/shared/yup/yupImporterSchemas';
-import { i18n } from 'src/i18n';import paymentsettingsEnumerators from '@modules/paymentsettings/paymentsettingsEnumerators';
+import { i18n } from '../../../i18n';
+import paymentsettingsEnumerators from '@modules/paymentsettings/paymentsettingsEnumerators';
 
 export default [
   {

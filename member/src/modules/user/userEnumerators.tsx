@@ -1,4 +1,4 @@
-import Roles from 'src/security/roles';
+import Roles from '../../security/roles';
 
 const userEnumerators = {
   status: ['active', 'invited', 'empty-permissions'],

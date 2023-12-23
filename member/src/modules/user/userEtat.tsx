@@ -1,4 +1,4 @@
-import EtatCivil from 'src/security/etat_civil';
+import EtatCivil from '../../security/etat_civil';
 
 
 const userEtat = {

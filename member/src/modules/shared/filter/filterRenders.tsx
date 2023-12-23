@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { i18n } from 'src/i18n';
+import { i18n } from '../../../i18n';
 
 const filterRenders = {
   enumerator: (i18nStartPath) => (value) =>

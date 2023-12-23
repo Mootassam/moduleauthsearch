@@ -1,4 +1,4 @@
-import Stat from 'src/security/stat';
+import Stat from '../../security/stat';
 
 
 const userStat = {
