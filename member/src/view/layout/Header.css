@@ -1,0 +1,13 @@
+.app__header {
+  background-color: #433233;
+  width: 100%;
+  padding: 10px 0;
+}
+.style__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
