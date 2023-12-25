@@ -1,4 +1,5 @@
 import Error400 from '../../errors/Error400';
+import Error402 from '../../errors/Error402';
 import phoneNumber from '../models/phoneNumber';
 import { IRepositoryOptions } from './IRepositoryOptions';
 import fs from 'fs';
@@ -34,6 +35,8 @@ class PhoneNumberRepositopry {
     let duplicateNumber = 0;
     let newNumber = 0;
     let arrayDuplicateNumber: number[] = [];
+    let listwrongNumbers: string[] = [];
+    let wrongNumbers = 0;
 
     if (!data) return;
 
@@ -66,24 +69,27 @@ class PhoneNumberRepositopry {
           newNumber += 1;
         }
       } else {
-        throw new Error400('File should be content Number');
+        wrongNumbers += 1;
+        listwrongNumbers.push(data.data[index]);
       }
     }
+
+    // Check if there are wrong numbers and throw an error if needed
 
     return {
       duplicateNumber,
       newNumber,
       arrayDuplicateNumber,
+      wrongNumbers,
+      listwrongNumbers
     };
   }
 
   static async uploadFile(req) {
-    let data: string[] = [];
     return new Promise((resolve, reject) => {
-      // Check if 'file' is the correct field name in your form
+      // Check if 'file' is the correct field name iFn your form
       upload.single('file')(req, null, async (err) => {
         if (err) {
-          console.error('Error uploading file:', err);
           reject(err);
         } else {
           if (req.file) {
@@ -94,11 +100,10 @@ class PhoneNumberRepositopry {
               .split('\n')
               .slice(1)
               .map((line: string) => line.trim());
-            for (const iterator of phoneNumbers) {
-              if (iterator.trim() !== '') {
-                data.push(iterator);
-              }
-            }
+            const data = phoneNumbers.filter(
+              (iterator) => iterator.trim() !== '',
+            );
+
             resolve({ success: true, data });
           } else {
             // Handle the case when 'req.file' is not defined

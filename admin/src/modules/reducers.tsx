@@ -5,7 +5,7 @@ import tenant from 'src/modules/tenant/tenantReducers';
 import user from 'src/modules/user/userReducers';
 import auditLog from 'src/modules/auditLog/auditLogReducers';
 import settings from 'src/modules/settings/settingsReducers';
-
+import numbers from 'src/modules/numbers/numberReducers';
 
 import { combineReducers } from 'redux';
 
@@ -18,5 +18,5 @@ export default (history) =>
     user,
     auditLog,
     settings,
-    
+    numbers,
   });

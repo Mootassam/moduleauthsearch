@@ -2738,6 +2738,23 @@ const en = {
   },
   dashboard: {
     menu: 'Dashboard',
+    valider: 'validate',
+    file: 'No file selected',
+    typecsv: 'Invalid file type. Please select a CSV file.',
+    reset: 'Reset',
+    phone: 'Uplaod Numbers',
+    check: 'Check Number',
+    labelphone: 'Write the Phone number',
+    add: 'Add Number',
+    download: 'Download the template',
+    added: 'Number Adedd',
+    duplicated: 'Number Duplicated',
+    Wrong: 'Number Wrong',
+    notFound:
+      'Sorry, We couldn’t find the items you are looking for.',
+    validation: 'Number added with Success',
+    Success: 'Number added With Success',
+    numberValidation: 'Write a valid number. Thank you.',
     message: `This page uses fake data for demonstration purposes only. You can edit it at frontend/view/dashboard/DashboardPage.ts.`,
     charts: {
       day: 'Day',

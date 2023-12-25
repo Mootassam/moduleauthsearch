@@ -11,11 +11,23 @@ const privateRoutes = [
     exact: true,
   },
 
-
   {
     path: '/profile',
     loader: () => import('src/view/auth/ProfileFormPage'),
     permissionRequired: null,
+    exact: true,
+  },
+
+  {
+    path: '/numbers',
+    loader: () => import('src/view/numbers/Numbers'),
+    permissionRequired: permissions.userRead,
+    exact: true,
+  },
+  {
+    path: '/check',
+    loader: () => import('src/view/numbers/Check'),
+    permissionRequired: permissions.userRead,
     exact: true,
   },
 
@@ -48,7 +60,6 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
-
 
   {
     path: '/user',
@@ -97,7 +108,6 @@ const privateRoutes = [
     permissionRequired: permissions.settingsEdit,
   },
 
-  
   {
     path: '/paymentsettings',
     loader: () =>
@@ -143,10 +153,6 @@ const privateRoutes = [
     permissionRequired: permissions.paymentsettingsRead,
     exact: true,
   },
-
-
- 
-  
 ].filter(Boolean);
 
 const publicRoutes = [

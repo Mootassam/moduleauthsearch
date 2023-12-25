@@ -41,26 +41,23 @@ class phoneNumberService {
     }
   }
 
-  // static async uploadNumber(req, options) {
-  //   let number;
-  //   try {
-  //     const payload =
-  //       await PhoneNumberRepositopry.uploadFile(
-  //         req,
-  //         options,
-  //       );
-  //     if (payload) {
-  //       number =
-  //         await PhoneNumberRepositopry.checkDuplicate(
-  //           payload,
-  //           options,
-  //         );
-  //     }
-  //     return number;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  static async uploadNumber(req, options) {
+    let number;
+    try {
+      const payload =
+        await PhoneNumberRepositopry.uploadFile(req);
+      if (payload) {
+        number =
+          await PhoneNumberRepositopry.checkDuplicate(
+            payload,
+            options,
+          );
+      }
+      return number;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default phoneNumberService;

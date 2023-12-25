@@ -40,15 +40,12 @@ function SigninPage() {
   const location = useLocation();
   const dispatch = useDispatch();
   const loading = useSelector(selectors.selectLoading);
-
   const { socialErrorCode } = queryString.parse(
     location.search,
   );
-
   const externalErrorMessage = useSelector(
     selectors.selectErrorMessage,
   );
-
   const backgroundImageUrl = useSelector(
     selectors.selectBackgroundImageUrl,
   );

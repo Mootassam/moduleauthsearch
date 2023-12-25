@@ -2560,8 +2560,12 @@ fieldset:disabled a.btn {
   background-color: var(--primary);
   border-color: var(--primary);
 }
-.btn-outline-primary:not(:disabled):not(.disabled):active:focus,
-.btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+.btn-outline-primary:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-primary:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(6, 30, 51, 0.5);
 }
@@ -2590,8 +2594,12 @@ fieldset:disabled a.btn {
   background-color: #6c757d;
   border-color: #6c757d;
 }
-.btn-outline-secondary:not(:disabled):not(.disabled):active:focus,
-.btn-outline-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-outline-secondary:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-secondary:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-secondary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
 }
@@ -2620,8 +2628,12 @@ fieldset:disabled a.btn {
   background-color: #28a745;
   border-color: #28a745;
 }
-.btn-outline-success:not(:disabled):not(.disabled):active:focus,
-.btn-outline-success:not(:disabled):not(.disabled).active:focus,
+.btn-outline-success:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-success:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-success.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
 }
@@ -2650,8 +2662,12 @@ fieldset:disabled a.btn {
   background-color: #17a2b8;
   border-color: #17a2b8;
 }
-.btn-outline-info:not(:disabled):not(.disabled):active:focus,
-.btn-outline-info:not(:disabled):not(.disabled).active:focus,
+.btn-outline-info:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-info:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-info.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
 }
@@ -2680,8 +2696,12 @@ fieldset:disabled a.btn {
   background-color: #ffc107;
   border-color: #ffc107;
 }
-.btn-outline-warning:not(:disabled):not(.disabled):active:focus,
-.btn-outline-warning:not(:disabled):not(.disabled).active:focus,
+.btn-outline-warning:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-warning:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-warning.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5);
 }
@@ -2710,8 +2730,12 @@ fieldset:disabled a.btn {
   background-color: #dc3545;
   border-color: #dc3545;
 }
-.btn-outline-danger:not(:disabled):not(.disabled):active:focus,
-.btn-outline-danger:not(:disabled):not(.disabled).active:focus,
+.btn-outline-danger:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-danger:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-danger.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
 }
@@ -2740,8 +2764,12 @@ fieldset:disabled a.btn {
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
-.btn-outline-light:not(:disabled):not(.disabled):active:focus,
-.btn-outline-light:not(:disabled):not(.disabled).active:focus,
+.btn-outline-light:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-light:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-light.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
 }
@@ -2770,8 +2798,12 @@ fieldset:disabled a.btn {
   background-color: #343a40;
   border-color: #343a40;
 }
-.btn-outline-dark:not(:disabled):not(.disabled):active:focus,
-.btn-outline-dark:not(:disabled):not(.disabled).active:focus,
+.btn-outline-dark:not(:disabled):not(
+    .disabled
+  ):active:focus,
+.btn-outline-dark:not(:disabled):not(
+    .disabled
+  ).active:focus,
 .show > .btn-outline-dark.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
 }
@@ -9019,4 +9051,20 @@ a.text-dark:focus {
   border-right: 2px solid white;
   color: white;
   background-color: #082947;
+}
+
+.list__tab {
+  display: flex;
+  width: 900px;
+  cursor: pointer;
+}
+.group__check {
+  margin-top: 20px;
+  gap: 10px;
+  display: flex;
+}
+.check__number {
+  background-color: #fff;
+  padding: 25px;
+  display: grid;
 }

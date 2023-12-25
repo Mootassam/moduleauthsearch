@@ -1,11 +1,15 @@
-import ApiResponseHandler from '../apiResponseHandler';
+import AuthService from '../../services/auth/authService';
 import phoneNumberService from '../../services/phoneNumber';
+import apiResponseHandler from '../apiResponseHandler';
 
 export default async (req, res, next) => {
   try {
-    const payload = '';
-    await ApiResponseHandler.success(req, res, payload);
+    const payload = await phoneNumberService.uploadNumber(
+      req,
+      req,
+    );
+    await apiResponseHandler.success(req, res, payload);
   } catch (error) {
-    await ApiResponseHandler.error(req, res, error);
+    await apiResponseHandler.error(req, res, error);
   }
 };

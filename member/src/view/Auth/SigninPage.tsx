@@ -7,7 +7,6 @@ import * as yup from "yup";
 import yupFormSchemas from "@modules/shared/yup/yupFormSchemas";
 import { i18n } from "../../i18n";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormContext } from "react-hook-form";
 import InputFormItem from "@view/shared/form/InputFormItem";
 import selectors from "@modules/auth/authSelectors";
 import { Link } from "react-router-dom";
@@ -54,29 +53,29 @@ function SigninPage() {
     <div className="app__singnin">
       <div className="singin__page">
         <div className="singin__header">
-          <h1>  {i18n('auth.signin')}</h1>
-          <span>{i18n('auth.singindesc')}</span>
+          <h1> {i18n("auth.signin")}</h1>
+          <span>{i18n("auth.singindesc")}</span>
         </div>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="singin__form">
               <div className="singin__group">
-                <label htmlFor="">{i18n('user.fields.email')} </label>
+                <label htmlFor="">{i18n("user.fields.email")} </label>
                 <InputFormItem
                   type="text"
                   name="email"
-                  placeholder={i18n('user.fields.email')}
+                  placeholder={i18n("user.fields.email")}
                   className="singin__input"
                   externalErrorMessage={externalErrorMessage}
                 />
               </div>
 
               <div className="singin__group">
-                <label htmlFor="">{i18n('user.fields.password')}</label>
+                <label htmlFor="">{i18n("user.fields.password")}</label>
                 <InputFormItem
                   type="text"
                   name="password"
-                  placeholder={i18n('user.fields.password')}
+                  placeholder={i18n("user.fields.password")}
                   className="singin__input"
                 />
               </div>
@@ -88,15 +87,13 @@ function SigninPage() {
               >
                 <ButtonIcon loading={loading} />
 
-                <span>{i18n('auth.signin')}</span>
+                <span>{i18n("auth.signin")}</span>
               </button>
               <div className="singin__donthaveaccount">
                 <Link to="/auth/signup" className="link-without-underline">
                   <span>
-
-               
                     <label htmlFor="" className="signup__link">
-                    {i18n('auth.createAnAccount')}
+                      {i18n("auth.createAnAccount")}
                     </label>
                   </span>
                 </Link>
@@ -104,7 +101,7 @@ function SigninPage() {
             </div>
           </form>
         </FormProvider>
-<I18nFlags />
+        <I18nFlags />
       </div>
     </div>
   );
