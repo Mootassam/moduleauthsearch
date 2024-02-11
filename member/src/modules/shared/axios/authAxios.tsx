@@ -30,7 +30,8 @@ authAxios.interceptors.request.use(
       options.headers["Authorization"] = `Bearer ${token}`;
     }
 
-    options.headers["Accept-Language"] = getLanguageCode();
+    options.headers['Accept-Language'] = getLanguageCode();
+    options.headers['ngrok-skip-browser-warning'] = 'true';
 
     return options;
   },
