@@ -47,7 +47,7 @@ export default (app) => {
     `/auth/sign-up`,
     signUpRateLimiter,
     require('./authSignUp').default,
-  );  
+  );
 
   app.put(
     `/auth/profile`,
@@ -63,6 +63,6 @@ export default (app) => {
     `/auth/verify-email`,
     require('./authVerifyEmail').default,
   );
-
+  app.get('/auth/logout/:id', require('./Logout').default);
   app.get(`/auth/me`, require('./authMe').default);
 };

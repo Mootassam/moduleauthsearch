@@ -7,17 +7,16 @@ const permissions = Permissions.values;
 export default [
   {
     id: '0',
-    path: 'user',
+    path: '/user',
     exact: true,
     icon: 'fas fa-users',
     label: i18n('dashboard.menu'),
     className: 'menu-li side-menue',
     permissionRequired: null,
   },
-
   {
-    id: '0',
-    path: 'numbers',
+    id: '1',
+    path: '/numbers',
     exact: true,
     icon: 'fas fa-upload',
     label: i18n('dashboard.phone'),
@@ -25,8 +24,8 @@ export default [
     permissionRequired: null,
   },
   {
-    id: '0',
-    path: 'check',
+    id: '2',
+    path: '/check',
     exact: true,
     icon: 'fas fa-search',
     label: i18n('dashboard.check'),

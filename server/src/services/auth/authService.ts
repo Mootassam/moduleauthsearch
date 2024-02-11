@@ -11,6 +11,7 @@ import TenantRepository from '../../database/repositories/tenantRepository';
 import { tenantSubdomain } from '../tenantSubdomain';
 import Error401 from '../../errors/Error401';
 import moment from 'moment';
+import user from '../../database/models/user';
 
 const BCRYPT_SALT_ROUNDS = 12;
 
@@ -177,9 +178,12 @@ class AuthService {
         { expiresIn: getConfig().AUTH_JWT_EXPIRES_IN },
       );
 
-      await MongooseRepository.commitTransaction(session);
+      const currentUser = user(options.database).findOne({
+        _id: newUser.id,
+      });
 
-      return token;
+      await MongooseRepository.commitTransaction(session);
+      return { token: token };
     } catch (error) {
       await MongooseRepository.abortTransaction(session);
 
@@ -259,14 +263,23 @@ class AuthService {
         { expiresIn: getConfig().AUTH_JWT_EXPIRES_IN },
       );
 
-      await MongooseRepository.commitTransaction(session);
+      const id = await UserRepository.saveTimelogin(
+        user.id,
+        user.tenants[0].tenant._id,
+        email,
+        options,
+      );
 
-      return token;
+      await MongooseRepository.commitTransaction(session);
+      return { token: token, id: id };
     } catch (error) {
       await MongooseRepository.abortTransaction(session);
-
       throw error;
     }
+  }
+
+  static async logout(id, options) {
+    await UserRepository.saveTimeLogout(id, options);
   }
 
   static async handleOnboard(

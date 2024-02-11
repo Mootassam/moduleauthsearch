@@ -107,7 +107,9 @@ const authActions = {
             password,
           );
 
-        AuthToken.set(token, true);
+        AuthToken.set(token.token, true);
+
+        AuthToken.saveId(token.id);
 
         const currentUser = await service.fetchMe();
 
@@ -143,10 +145,11 @@ const authActions = {
             email,
             password,
           );
+        AuthToken.set(token.token, rememberMe);
 
-        AuthToken.set(token, rememberMe);
+        AuthToken.saveId(token.id);
+
         currentUser = await service.fetchMe();
-
         dispatch({
           type: authActions.AUTH_SUCCESS,
           payload: {
@@ -171,6 +174,26 @@ const authActions = {
     try {
       dispatch({ type: authActions.AUTH_START });
       await service.signout();
+
+      dispatch({
+        type: authActions.AUTH_SUCCESS,
+        payload: {
+          currentUser: null,
+        },
+      });
+    } catch (error) {
+      Errors.handle(error);
+
+      dispatch({
+        type: authActions.AUTH_ERROR,
+      });
+    }
+  },
+
+  doSignoutWithtime: () => async (dispatch) => {
+    try {
+      dispatch({ type: authActions.AUTH_START });
+      await service.singnoutWithTime();
 
       dispatch({
         type: authActions.AUTH_SUCCESS,

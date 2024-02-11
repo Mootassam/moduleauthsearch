@@ -85,13 +85,8 @@ export default class TenantUserRepository {
         options,
       );
 
-    await User(options.database).updateOne(
+    await User(options.database).deleteOne(
       { _id: id },
-      {
-        $pull: {
-          tenants: { tenant: tenantId },
-        },
-      },
       options,
     );
 
@@ -108,13 +103,20 @@ export default class TenantUserRepository {
     );
   }
 
-  static async updateRoles(tenantId, id, roles, options, status) {
-    const user = await MongooseRepository.wrapWithSessionIfExists(
-      User(options.database)
-        .findById(id)
-        .populate('tenants.tenant'),
-      options,
-    );
+  static async updateRoles(
+    tenantId,
+    id,
+    roles,
+    options,
+    status,
+  ) {
+    const user =
+      await MongooseRepository.wrapWithSessionIfExists(
+        User(options.database)
+          .findById(id)
+          .populate('tenants.tenant'),
+        options,
+      );
 
     let tenantUser = user.tenants.find((userTenant) => {
       return userTenant.tenant.id === tenantId;
@@ -159,7 +161,7 @@ export default class TenantUserRepository {
     }
 
     tenantUser.roles = newRoles;
-    tenantUser.status = status,
+    (tenantUser.status = status),
       // tenantUser.status = selectStatus(
       //   tenantUser.status,
       //   newRoles,
@@ -255,7 +257,6 @@ export default class TenantUserRepository {
 
     return tenantUser;
   }
-
 
   static async acceptInvitation(
     invitationToken,

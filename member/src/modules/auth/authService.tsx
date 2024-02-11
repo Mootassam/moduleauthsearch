@@ -58,7 +58,16 @@ export default class AuthService {
   }
 
   static signout() {
+    const id = AuthToken.getId();
     AuthToken.set(null, true);
+    AuthToken.saveId(null);
+  }
+
+  static async singnoutWithTime() {
+    const id = AuthToken.getId();
+    await authAxios.get(`/auth/logout/${id}`);
+    AuthToken.set(null, true);
+    AuthToken.saveId(null);
   }
 
   static async updateProfile(data) {

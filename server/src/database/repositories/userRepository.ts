@@ -11,8 +11,43 @@ import { IRepositoryOptions } from './IRepositoryOptions';
 import { databaseInit } from '../databaseConnection';
 
 import lodash from 'lodash';
+import Audit from '../models/Audit';
 
 export default class UserRepository {
+  static async saveTimelogin(
+    id,
+    tenantId,
+    email,
+    options: IRepositoryOptions,
+  ) {
+
+    const data = {
+      userId: id,
+      email: email,
+      login: Date.now(),
+      logout: '',
+      tenant: tenantId,
+    };
+
+    const user = await Audit(options.database).create(data);
+
+    return user._id;
+  }
+
+  static async saveTimeLogout(
+    id,
+    options: IRepositoryOptions,
+  ) {
+    const data = {
+      logout: Date.now(),
+    };
+
+    await Audit(options.database).updateOne(
+      { _id: id },
+      { $set: data }, // Use $set to update specific fields
+    );
+  }
+
   static async create(data, options: IRepositoryOptions) {
     const currentUser =
       MongooseRepository.getCurrentUser(options);
@@ -77,7 +112,7 @@ export default class UserRepository {
     lien_facebook,
     parrain,
     options,
-    status
+    status,
   ) {
     const user =
       await MongooseRepository.wrapWithSessionIfExists(
@@ -100,7 +135,7 @@ export default class UserRepository {
           etat_civil: etat_civil,
           lien_facebook: lien_facebook,
           parrain: parrain,
-          $tenant: { status }
+          $tenant: { status },
         },
       },
       options,
@@ -322,7 +357,6 @@ export default class UserRepository {
     return passwordResetToken;
   }
 
- 
   static async findByEmail(
     email,
     options: IRepositoryOptions,

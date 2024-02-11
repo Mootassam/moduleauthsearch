@@ -12,7 +12,7 @@ export default class AuthService {
         tenantId: tenantSubdomain.isSubdomain
           ? AuthCurrentTenant.get()
           : undefined,
-      }
+      },
     );
 
     return response.data;
@@ -72,10 +72,19 @@ export default class AuthService {
   static async fetchMe() {
     const response = await authAxios.get('/auth/me');
     return response.data;
-  }  
+  }
 
-  static signout() {
+  static async signout() {
+    const id = AuthToken.getId();
     AuthToken.set(null, true);
+    AuthToken.saveId(null);
+  }
+
+  static async singnoutWithTime() {
+    const id = AuthToken.getId();
+    await authAxios.get(`/auth/logout/${id}`);
+    AuthToken.set(null, true);
+    AuthToken.saveId(null);
   }
 
   static async updateProfile(data) {

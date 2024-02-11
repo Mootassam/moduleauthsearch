@@ -16,6 +16,17 @@ export class AuthToken {
     }
   }
 
+  static saveId(id) {
+    if (id) {
+      localStorage.setItem('id', id || null);
+    } else {
+      localStorage.setItem('id', '');
+    }
+  }
+
+  static getId() {
+    return localStorage.getItem('id');
+  }
   static applyFromLocationUrlIfExists() {
     const urlParams = new URLSearchParams(
       window.location.search,

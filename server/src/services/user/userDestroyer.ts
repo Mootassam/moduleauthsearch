@@ -5,6 +5,7 @@ import assert from 'assert';
 import Error400 from '../../errors/Error400';
 import Plans from '../../security/plans';
 import { IServiceOptions } from '../IServiceOptions';
+import Audit from '../../database/models/Audit';
 
 export default class UserDestroyer {
   options: IServiceOptions;
@@ -14,7 +15,7 @@ export default class UserDestroyer {
   constructor(options) {
     this.options = options;
   }
-  
+
   async destroyAll(data) {
     this.data = data;
 
@@ -58,6 +59,10 @@ export default class UserDestroyer {
       id,
       this.options,
     );
+
+    await Audit(this.options.database).deleteMany({
+      userId: id,
+    });
 
     await TenantUserRepository.destroy(
       this.options.currentTenant.id,

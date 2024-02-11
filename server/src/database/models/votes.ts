@@ -55,8 +55,6 @@ export default (database) => {
     },
   );
 
-
-
   VotesSchema.virtual('id').get(function () {
     // @ts-ignore
     return this._id.toHexString();

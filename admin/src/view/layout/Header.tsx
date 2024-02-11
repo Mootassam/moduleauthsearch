@@ -28,7 +28,7 @@ function Header(props) {
   );
 
   const doSignout = () => {
-    dispatch(authActions.doSignout());
+    dispatch(authActions.doSignoutWithtime());
   };
 
   const doNavigateToProfile = () => {

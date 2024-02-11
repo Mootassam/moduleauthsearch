@@ -1,14 +1,14 @@
-import service from '@modules/auth/authService';
-import Errors from '@modules/shared/error/errors';
-import Message from '@view/shared/message';
-import { i18n } from '../../i18n';
-import { getHistory } from '@modules/store';
-import { AuthToken } from '@modules/auth/authToken';
-import AuthCurrentTenant from '@modules/auth/authCurrentTenant';
-import selectors from '@modules/auth/authSelectors';
-import SettingsService from '../settings/settingsService';
+import service from "@modules/auth/authService";
+import Errors from "@modules/shared/error/errors";
+import Message from "@view/shared/message";
+import { i18n } from "../../i18n";
+import { getHistory } from "@modules/store";
+import { AuthToken } from "@modules/auth/authToken";
+import AuthCurrentTenant from "@modules/auth/authCurrentTenant";
+import selectors from "@modules/auth/authSelectors";
+import SettingsService from "../settings/settingsService";
 
-const prefix = 'AUTH';
+const prefix = "AUTH";
 
 const authActions = {
   ERROR_MESSAGE_CLEARED: `${prefix}_ERROR_MESSAGE_CLEARED`,
@@ -48,32 +48,29 @@ const authActions = {
   EMAIL_CONFIRMATION_SUCCESS: `${prefix}_EMAIL_CONFIRMATION_SUCCESS`,
   EMAIL_CONFIRMATION_ERROR: `${prefix}_EMAIL_CONFIRMATION_ERROR`,
 
-  doClearErrorMessage() { 
+  doClearErrorMessage() {
     return {
       type: authActions.ERROR_MESSAGE_CLEARED,
     };
   },
 
-  doSendEmailConfirmation:
-    () => async (dispatch, getState) => {
-      try {
-        dispatch({
-          type: authActions.EMAIL_CONFIRMATION_START,
-        });
-        await service.sendEmailVerification();
-        Message.success(
-          i18n('auth.verificationEmailSuccess'),
-        );
-        dispatch({
-          type: authActions.EMAIL_CONFIRMATION_SUCCESS,
-        });
-      } catch (error) {
-        Errors.handle(error);
-        dispatch({
-          type: authActions.EMAIL_CONFIRMATION_ERROR,
-        });
-      }
-    },
+  doSendEmailConfirmation: () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: authActions.EMAIL_CONFIRMATION_START,
+      });
+      await service.sendEmailVerification();
+      Message.success(i18n("auth.verificationEmailSuccess"));
+      dispatch({
+        type: authActions.EMAIL_CONFIRMATION_SUCCESS,
+      });
+    } catch (error) {
+      Errors.handle(error);
+      dispatch({
+        type: authActions.EMAIL_CONFIRMATION_ERROR,
+      });
+    }
+  },
 
   doSendPasswordResetEmail: (email) => async (dispatch) => {
     try {
@@ -81,9 +78,7 @@ const authActions = {
         type: authActions.PASSWORD_RESET_EMAIL_START,
       });
       await service.sendPasswordResetEmail(email);
-      Message.success(
-        i18n('auth.passwordResetEmailSuccess'),
-      );
+      Message.success(i18n("auth.passwordResetEmailSuccess"));
       dispatch({
         type: authActions.PASSWORD_RESET_EMAIL_SUCCESS,
       });
@@ -95,40 +90,33 @@ const authActions = {
     }
   },
 
-  doRegisterEmailAndPassword:
-    (email, password) => async (dispatch) => {
-      try {
-        dispatch({ type: authActions.AUTH_START });
+  doRegisterEmailAndPassword: (email, password) => async (dispatch) => {
+    try {
+      dispatch({ type: authActions.AUTH_START });
 
-        const token =
-          await service.registerWithEmailAndPassword(
-            email,
-            password,
-          );
+      const token = await service.registerWithEmailAndPassword(email, password);
+      AuthToken.set(token.token, true);
+      const currentUser = await service.fetchMe();
 
-        AuthToken.set(token, true);
+      dispatch({
+        type: authActions.AUTH_SUCCESS,
+        payload: {
+          currentUser,
+        },
+      });
+    } catch (error) {
+      await service.signout();
 
-        const currentUser = await service.fetchMe();
-
-        dispatch({
-          type: authActions.AUTH_SUCCESS,
-          payload: {
-            currentUser,
-          },
-        });
-      } catch (error) {
-        await service.signout();
-
-        if (Errors.errorCode(error) !== 400) {
-          Errors.handle(error);
-        }
-
-        dispatch({
-          type: authActions.AUTH_ERROR,
-          payload: Errors.selectMessage(error),
-        });
+      if (Errors.errorCode(error) !== 400) {
+        Errors.handle(error);
       }
-    },
+
+      dispatch({
+        type: authActions.AUTH_ERROR,
+        payload: Errors.selectMessage(error),
+      });
+    }
+  },
 
   doSigninWithEmailAndPassword:
     (email, password, rememberMe) => async (dispatch) => {
@@ -137,18 +125,15 @@ const authActions = {
 
         let currentUser = null;
 
-        const token =
-          await service.signinWithEmailAndPassword(
-            email,
-            password,
-          );
+        const token = await service.signinWithEmailAndPassword(email, password);
 
-      
+        console.log(token.token);
 
+        AuthToken.set(token.token, true);
 
-        AuthToken.set(token, true);
+        AuthToken.saveId(token.id);
+
         currentUser = await service.fetchMe();
-
         dispatch({
           type: authActions.AUTH_SUCCESS,
           payload: {
@@ -189,6 +174,25 @@ const authActions = {
     }
   },
 
+  doSignoutWithtime: () => async (dispatch) => {
+    try {
+      dispatch({ type: authActions.AUTH_START });
+      await service.singnoutWithTime();
+
+      dispatch({
+        type: authActions.AUTH_SUCCESS,
+        payload: {
+          currentUser: null,
+        },
+      });
+    } catch (error) {
+      Errors.handle(error);
+
+      dispatch({
+        type: authActions.AUTH_ERROR,
+      });
+    }
+  },
   doInit: () => async (dispatch) => {
     try {
       const token = AuthToken.get();
@@ -257,8 +261,8 @@ const authActions = {
         type: authActions.UPDATE_PROFILE_SUCCESS,
       });
       await dispatch(authActions.doRefreshCurrentUser());
-      Message.success(i18n('auth.profile.success'));
-      getHistory().push('/');
+      Message.success(i18n("auth.profile.success"));
+      getHistory().push("/");
     } catch (error) {
       Errors.handle(error);
 
@@ -268,40 +272,32 @@ const authActions = {
     }
   },
 
-  doChangePassword:
-    (oldPassword, newPassword) => async (dispatch) => {
-      try {
-        dispatch({
-          type: authActions.PASSWORD_CHANGE_START,
-        });
+  doChangePassword: (oldPassword, newPassword) => async (dispatch) => {
+    try {
+      dispatch({
+        type: authActions.PASSWORD_CHANGE_START,
+      });
 
-        await service.changePassword(
-          oldPassword,
-          newPassword,
-        );
+      await service.changePassword(oldPassword, newPassword);
 
-        dispatch({
-          type: authActions.PASSWORD_CHANGE_SUCCESS,
-        });
-        await dispatch(authActions.doRefreshCurrentUser());
-        Message.success(
-          i18n('auth.passwordChange.success'),
-        );
-        getHistory().push('/');
-      } catch (error) {
-        Errors.handle(error);
+      dispatch({
+        type: authActions.PASSWORD_CHANGE_SUCCESS,
+      });
+      await dispatch(authActions.doRefreshCurrentUser());
+      Message.success(i18n("auth.passwordChange.success"));
+      getHistory().push("/");
+    } catch (error) {
+      Errors.handle(error);
 
-        dispatch({
-          type: authActions.PASSWORD_CHANGE_ERROR,
-        });
-      }
-    },
+      dispatch({
+        type: authActions.PASSWORD_CHANGE_ERROR,
+      });
+    }
+  },
 
   doVerifyEmail: (token) => async (dispatch, getState) => {
     try {
-      const isLoading = selectors.selectLoadingVerifyEmail(
-        getState(),
-      );
+      const isLoading = selectors.selectLoadingVerifyEmail(getState());
 
       if (isLoading) {
         return;
@@ -319,7 +315,7 @@ const authActions = {
         type: authActions.EMAIL_VERIFY_SUCCESS,
       });
 
-      getHistory().push('/');
+      getHistory().push("/");
     } catch (error) {
       dispatch({
         type: authActions.EMAIL_VERIFY_ERROR,
@@ -328,38 +324,36 @@ const authActions = {
     }
   },
 
-  doResetPassword:
-    (token, password) => async (dispatch) => {
-      try {
-        dispatch({
-          type: authActions.PASSWORD_RESET_START,
-        });
+  doResetPassword: (token, password) => async (dispatch) => {
+    try {
+      dispatch({
+        type: authActions.PASSWORD_RESET_START,
+      });
 
-        await service.passwordReset(token, password);
+      await service.passwordReset(token, password);
 
-        Message.success(i18n('auth.passwordResetSuccess'));
-        dispatch({
-          type: authActions.PASSWORD_RESET_SUCCESS,
-        });
-        getHistory().push('/');
-      } catch (error) {
-        Errors.handle(error);
+      Message.success(i18n("auth.passwordResetSuccess"));
+      dispatch({
+        type: authActions.PASSWORD_RESET_SUCCESS,
+      });
+      getHistory().push("/");
+    } catch (error) {
+      Errors.handle(error);
 
-        dispatch({
-          type: authActions.PASSWORD_RESET_ERROR,
-        });
+      dispatch({
+        type: authActions.PASSWORD_RESET_ERROR,
+      });
 
-        dispatch(authActions.doSignout());
-        getHistory().push('/');
-      }
-    },
+      dispatch(authActions.doSignout());
+      getHistory().push("/");
+    }
+  },
 
   doSelectTenant: (tenant) => async (dispatch) => {
- 
     AuthCurrentTenant.set(tenant);
     await dispatch(authActions.doRefreshCurrentUser());
     SettingsService.applyThemeFromTenant();
-    getHistory().push('/');
+    getHistory().push("/");
   },
 };
 

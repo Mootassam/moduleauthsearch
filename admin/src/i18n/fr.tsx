@@ -24,7 +24,6 @@ const fr = {
     continue: '继续',
     configurations: '配置',
     filters: '过滤器',
-
   },
 
   app: {
@@ -35,16 +34,7 @@ const fr = {
     menu: 'API',
   },
 
-  entities: {
- 
-   
- 
-
-
-
-  },
-
-
+  entities: {},
 
   auth: {
     tenants: '工作区',
@@ -58,8 +48,7 @@ const fr = {
     signin: '登录',
     signup: '注册',
     signout: '注销',
-    alreadyHaveAnAccount:
-      '已有账户？ 登录。',
+    alreadyHaveAnAccount: '已有账户？ 登录。',
     social: {
       errors: {
         'auth-invalid-provider':
@@ -128,17 +117,18 @@ const fr = {
       lastName: '姓氏',
       status: '状态',
       role: '角色',
+      login: '登录',
+      Logout: '登出',
       createdAt: '创建于',
       updatedAt: '更新时间',
       roleUser: '角色/用户',
-      phoneNumber:"电话号码",
+      phoneNumber: '电话号码',
       roles: '角色',
       createdAtRange: '创建于',
       password: '密码',
       oldPassword: '旧密码',
       newPassword: '新密码',
-      newPasswordConfirmation:
-        '确认新密码',
+      newPasswordConfirmation: '确认新密码',
       rememberMe: '记住我',
     },
     sector: {
@@ -178,21 +168,20 @@ const fr = {
       email: '电子邮件 ${value} 无效',
     },
     title: '用户',
+    history: '历史签到',
     menu: '用户',
     doAddSuccess: '用户注册成功',
     doUpdateSuccess: '用户注册成功',
     exporterFileName: 'users_export',
     doDestroySuccess: '用户成功删除',
-    doDestroyAllSelectedSuccess:
-      '用户成功删除',
+    doDestroyAllSelectedSuccess: '用户成功删除',
     edit: {
       title: '编辑用户',
     },
     new: {
       title: '显示用户',
       titleModal: '用户提示',
-      emailsHint:
-        '使用逗号分隔多个电子邮件地址。',
+      emailsHint: '使用逗号分隔多个电子邮件地址。',
     },
     view: {
       title: '显示用户',
@@ -204,8 +193,7 @@ const fr = {
       hint: 'Les colonnes Fichiers/Images doivent contenir les URL des fichiers séparés par un espace. Relationships must be the ID of the referenced records separated by space. Roles must be the role ids separated by space.',
     },
     errors: {
-      userAlreadyExists:
-        '使用此电子邮件的用户已存在',
+      userAlreadyExists: '使用此电子邮件的用户已存在',
       userNotFound: '找不到用户',
       revokingOwnPermission: `你不能撤销你自己的管理员权限`,
     },
@@ -294,8 +282,7 @@ const fr = {
     menu: '审计日志',
     title: '审计日志',
     exporterFileName: 'audit_log_export',
-    entityNamesHint:
-      '使用逗号分隔多个实体。',
+    entityNamesHint: '使用逗号分隔多个实体。',
     fields: {
       id: '编号',
       timestampRange: '期间',
@@ -337,11 +324,11 @@ const fr = {
     },
   },
   dashboard: {
-    valider:'提交',
+    valider: '提交',
     file: '未選擇文件',
     typecsv: '文件類型無效。 請選擇 CSV 檔案。',
     menu: '用户',
-    reset:'重置',
+    reset: '重置',
     phone: '上傳號碼',
     check: '檢查號碼',
     labelphone: '寫下電話號碼',
@@ -350,10 +337,9 @@ const fr = {
     added: '添加數量',
     duplicated: '數量重複',
     Wrong: '數字錯誤',
-    notFound:
-      '抱歉，我們找不到您要找的商品。',
+    notFound: '抱歉，我們找不到您要找的商品。',
     validation: '新增成功的數字',
-    Success:  '新增號碼 成功',
+    Success: '新增號碼 成功',
     numberValidation: '寫一個有效的數字。 謝謝。',
     message: `This page uses fake data for demonstration purposes only. You can edit it at frontend/view/dashboard/DashboardPage.ts.`,
     charts: {
@@ -412,8 +398,7 @@ const fr = {
   },
 
   preview: {
-    error:
-      '对不起，在预览模式下不允许执行此操作。',
+    error: '对不起，在预览模式下不允许执行此操作。',
   },
 
   // See https://github.com/jquense/yup#using-a-adherent-locale-dictionary
@@ -422,28 +407,22 @@ const fr = {
     mixed: {
       default: '${path} 无效',
       required: '${path} 是必需的',
-      oneOf:
-        '${path} 必须是以下值之一：${values}',
-      notOneOf:
-        '${path} 不能是以下值之一：${values}',
+      oneOf: '${path} 必须是以下值之一：${values}',
+      notOneOf: '${path} 不能是以下值之一：${values}',
       notType: ({ path, type, value, originalValue }) => {
         return `${path} 必须是${type}`;
       },
     },
     string: {
-      length:
-        '${path} 必须正好是 ${length} 个字符',
+      length: '${path} 必须正好是 ${length} 个字符',
       min: '${path} 必须至少为 ${min} 个字符',
       max: '${path} 最多只能有 ${max} 个字符',
-      matches:
-        '${path} 必须匹配以下内容：“${regex}"',
+      matches: '${path} 必须匹配以下内容：“${regex}"',
       email: '${path} 必须是有效的电子邮件',
       url: '${path} 必须是一个有效的 URL',
       trim: '${path} 必须是经过修剪的字符串',
-      lowercase:
-        '${path} 必须是小写字符串',
-      uppercase:
-        '${path} 必须是大写字符串',
+      lowercase: '${path} 必须是小写字符串',
+      uppercase: '${path} 必须是大写字符串',
       selected: '必须选择 ${path}',
     },
     number: {
@@ -451,8 +430,7 @@ const fr = {
       max: '${path} 必须小于或等于 ${max}',
       lessThan: '${path} 必须小于 ${less}',
       moreThan: '${path} 必须大于 ${more}',
-      notEqual:
-        '${path} 不能等于 ${notEqual}',
+      notEqual: '${path} 不能等于 ${notEqual}',
       positive: '${path} 必须是正数',
       negative: '${path} 必须是负数',
       integer: '${path} 必须是一个整数',
@@ -463,8 +441,7 @@ const fr = {
     },
     boolean: {},
     object: {
-      noUnknown:
-        '${path} 字段在对象形状中不能有未指定的键',
+      noUnknown: '${path} 字段在对象形状中不能有未指定的键',
     },
     array: {
       min: ({ min, path }) =>

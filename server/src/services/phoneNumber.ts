@@ -1,5 +1,4 @@
 import PhoneNumberRepositopry from '../database/repositories/PhoneNumberRepository';
-import Error400 from '../errors/Error400';
 import Error402 from '../errors/Error402';
 
 class phoneNumberService {
@@ -11,7 +10,7 @@ class phoneNumberService {
           options,
         );
       if (data) {
-        throw new Error402('Number alreday exist');
+        throw new Error402('号码已存在');
       }
       const payload =
         await PhoneNumberRepositopry.saveNumber(
@@ -32,9 +31,9 @@ class phoneNumberService {
           options,
         );
       if (data) {
-        throw new Error402('Number alreday exist');
+        throw new Error402('号码已存在');
       }
-      const payload = 'Number Not Exist ';
+      const payload = '号码不存在';
       return payload;
     } catch (error) {
       throw error;

@@ -5,6 +5,13 @@ const permissions = Permissions.values;
 
 const privateRoutes = [
   {
+    path: '/user/logs/:id',
+    loader: () => import('src/view/audits/list/AuditPage'),
+    permissionRequired: permissions.userRead,
+    exact: true,
+  },
+
+  {
     path: '/',
     loader: () => import('src/view/user/list/UserPage'),
     permissionRequired: permissions.userRead,

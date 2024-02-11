@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import userSelectors from 'src/modules/user/userSelectors';
 import selectors from 'src/modules/user/list/userListSelectors';
-import actions from 'src/modules/user/list/userListActions';
-import { Link } from 'react-router-dom';
+import actions from 'src/modules/audits/list/auditsListActions';
+
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
 import TableColumnHeader from 'src/view/shared/table/TableColumnHeader';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
-import Roles from 'src/security/roles';
-import UserStatusView from 'src/view/user/view/UserStatusView';
-import Avatar from 'src/view/shared/Avatar';
-import TableWrapper from 'src/view/shared/styles/TableWrapper';
 
-function UserTable() {
+import TableWrapper from 'src/view/shared/styles/TableWrapper';
+import Dates from 'src/view/shared/dates';
+
+function AuditTable() {
   const dispatch = useDispatch();
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
@@ -74,7 +73,7 @@ function UserTable() {
     <>
       <TableWrapper>
         <div className="table-responsive">
-          <table className="table table-striped     2">
+          <table className="table table-striped 2">
             <thead className="thead">
               <tr>
                 <TableColumnHeader className="th-checkbox">
@@ -89,10 +88,7 @@ function UserTable() {
                     </div>
                   )}
                 </TableColumnHeader>
-                <TableColumnHeader
-                  className="text-center"
-                  label={i18n('user.fields.avatars')}
-                ></TableColumnHeader>
+
                 <TableColumnHeader
                   onSort={doChangeSort}
                   hasRows={hasRows}
@@ -100,21 +96,14 @@ function UserTable() {
                   name={'email'}
                   label={i18n('user.fields.email')}
                 />
+
                 <TableColumnHeader
-                  onSort={doChangeSort}
-                  hasRows={hasRows}
-                  sorter={sorter}
-                  name={'fullName'}
-                  label={i18n('user.fields.fullName')}
-                />
-                <TableColumnHeader
-                  label={i18n('user.fields.roles')}
+                  label={i18n('user.fields.login')}
                 ></TableColumnHeader>
                 <TableColumnHeader
                   className="text-center"
-                  label={i18n('user.fields.status')}
+                  label={i18n('user.fields.Logout')}
                 />
-                <TableColumnHeader className="th-actions" />
               </tr>
             </thead>
             <tbody>
@@ -135,7 +124,7 @@ function UserTable() {
                 </tr>
               )}
               {!loading &&
-                rows?.map((row) => (
+                rows.map((row) => (
                   <tr key={row.id}>
                     <th className="th-checkbox" scope="row">
                       <div className="adherent-control adherent-checkbox">
@@ -147,52 +136,26 @@ function UserTable() {
                         </label>
                       </div>
                     </th>
-                    <td className="text-center">
-                      <Avatar
-                        src={
-                          row.avatars && row.avatars.length
-                            ? row.avatars[0].downloadUrl
-                            : undefined
-                        }
-                        alt="avatar"
-                      />
-                    </td>
+
                     <td>{row.email}</td>
-                    <td>{row.fullName}</td>
-                    <td>
-                      {row?.roles?.map((roleId) => (
-                        <div key={roleId}>
-                          <span>
-                            {Roles.labelOf(roleId)}
-                          </span>
-                        </div>
-                      ))}
+                    <td
+                      style={{
+                        color: 'green',
+                        width: 'max-content',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {Dates.formatDate(row.login)}
                     </td>
-                    <td className="text-center">
-                      <UserStatusView value={row.status} />
-                    </td>
-                    <td className="td-actions">
-                      <Link to={`/user/logs/${row.id}`}>
-                        <i className="fas fa-history"></i>
-                      </Link>
-                      {hasPermissionToEdit && (
-                        <Link
-                          className="btn btn-link"
-                          to={`/user/${row.id}/edit`}
-                        >
-                          {i18n('common.edit')}
-                        </Link>
-                      )}
-                      {hasPermissionToDestroy && (
-                        <button
-                          className="btn btn-link"
-                          onClick={() =>
-                            setRecordIdToDestroy(row.id)
-                          }
-                        >
-                          {i18n('common.destroy')}
-                        </button>
-                      )}
+                    <td
+                      style={{
+                        textAlign: 'center',
+                        color: 'red',
+                        width: 'max-content',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {Dates.formatDate(row.logout)}
                     </td>
                   </tr>
                 ))}
@@ -220,4 +183,4 @@ function UserTable() {
   );
 }
 
-export default UserTable;
+export default AuditTable;
