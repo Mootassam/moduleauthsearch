@@ -2,7 +2,7 @@ version: 2
 authtoken: 2YtbiwxfGx0czWvlLXmB0dBS7R3_6cAprRqXbrCLvvos1xMLM
 tunnels:
   first:
-    addr: 80
+    addr: 8855
     proto: http
   second:
     addr: 3055
